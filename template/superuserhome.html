@@ -1,0 +1,70 @@
+{% extends "adminlayout.html" %}
+{% load static %}
+{% block title %}
+admin
+{% endblock %}
+{% block content %}
+<a href="{% url 'user_add' %}" class="btn btn-primary float-right mt-4 ms-5 "> Add user<img
+    src="{% static 'img/plus.png' %}" height="20px" width="20px" alt=""></a>
+<div class="container-fluid mt-5">
+  <div class="row">
+    <div class="col-lg-12">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Full Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">User Name</th>
+            <th scope="col">superuser</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {% if search_data %}
+          {% for i in search_data %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{i.first_name}} {{i.last_name}}</td>
+            <td>{{i.email}}</td>
+            <td>{{i.username}}</td>
+            <td>
+              <span><a href="{% url 'user_edit' id=i.id %}" class="mr-4" title="Edit"><i
+                    class="fa fa-edit color-muted"></i> </a>
+                <a href="{% url 'user_delete' id=i.id %}" title="Delete"><i class="fa fa-trash color-danger"
+                    style="font-size:18px;color:red"></i></a></span>
+            </td>
+          </tr>
+          {% endfor %}
+          {% else %}
+          {% for i in user_list %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{i.first_name}} {{i.last_name}}</td>
+            <td>{{i.email}}</td>
+            <td>{{i.username}}</td>
+            {% if i.is_superuser %}
+            <td>
+              <input class="form-check-input" type="checkbox" value="True" name="superuseractive" checked
+                id="flexCheckChecked">
+            </td>
+            {% else %}
+            <td></td>
+            {% endif %}
+            <td>
+              <span><a href="{% url 'user_edit' id=i.id %}" class="mr-4" title="Edit"><i
+                    class="fa fa-edit color-muted"></i> </a>
+                <a href="{% url 'user_delete' id=i.id %}" title="Delete"><i class="fa fa-trash color-danger"
+                    style="font-size:18px;color:red"></i></a></span>
+            </td>
+
+          </tr>
+          {% endfor %}
+          {% endif %}
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

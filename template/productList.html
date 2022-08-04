@@ -1,0 +1,61 @@
+{% extends "home.html" %}
+{% load static %}
+{% block title %}
+product deatils
+{% endblock %}
+{% block content %}
+
+
+
+<div class="container">
+    <div class="row">
+
+        {% if search_product %}
+        {% for i in search_product %}
+        <div class="col-lg-4 mt-4">
+            <div class="card" style="width: 18rem;">
+                {% if i.image %}
+                <img class="card-img-top" src="{{i.image.url}}" alt="Card image cap" height="150px" width="300px">
+                {% else %}
+                <img class="card-img-top" src="{% static 'img/noimage.jpg'%} " alt=" Card image cap" height="150px" width="300px">
+                {% endif %}
+                <div class="card-body shadow">
+                    <h5 class="card-title">{{i.name}}</h5>
+                    <h5 class="card-text"><strong>₹ </strong>{{i.price}}</h5>
+                    <h5 class="card-text">Available Stock {{i.count}}</h5>
+                    <p class="card-text">{{i.description}}</p>
+                    <a href="#" class="btn btn-primary">ADD TO CART</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        {% for i in product %}
+        <div class="col-lg-4 mt-4">
+            <div class="card" style="width: 18rem;">
+                {% if i.image %}
+                <img class="card-img-top" src="{{i.image.url}}" alt="Card image cap" height="150px" width="300px">
+                {% else %}
+                <img class="card-img-top" src="{% static 'img/noimage.jpg'%} " alt=" Card image cap" height="150px" width="300px">
+                {% endif %}
+                <div class="card-body shadow">
+                    <h5 class="card-title">{{i.name}}</h5>
+                    <h5 class="card-text"><strong>₹ </strong>{{i.price}}</h5>
+                    <h5 class="card-text">Available Stock {{i.count}}</h5>
+                    <p class="card-text">{{i.description}}</p>
+                    <a href="#" class="btn btn-primary">ADD TO CART</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+
+
+
+
+
+    </div>
+</div>
+
+{% endblock %}

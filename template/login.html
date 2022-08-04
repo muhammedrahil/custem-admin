@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block title %}
+login
+{% endblock %}
+{% block content %}
+<div class="col-lg-6 mb-5 mb-lg-0">
+  <div class="card shadow">
+    <div class="card-body py-5 px-md-5  mt-5">
+      <form method="post">
+        {% csrf_token %}
+
+        {% if messages %}
+        {% for message in messages %}
+        <p style="color: red">{{ message }}</p>
+        {% endfor %}
+        {% endif %}
+        <!-- User Name input -->
+        <div class="form-outline mb-4 ">
+          <label class="form-label" for="form3Example1">User Name</label>
+          <input type="text" id="form3Example3" name="username" class="form-control" placeholder="User Name" required />
+        </div>
+
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+          <label class="form-label" for="form3Example2">Password</label>
+          <input type="password" id="form3Example4" name="password" class="form-control" placeholder="Password"
+            required />
+        </div>
+
+        <!-- Checkbox -->
+        <div class="form-check d-flex justify-content-center mb-4">
+          <input class="form-check-input me-2" type="checkbox" value="" id="form2Example33" checked />
+          <label class="form-check-label" for="form2Example33">
+            Subscribe to our newsletter
+          </label>
+        </div>
+
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary btn-block mb-4 shadow">
+          sign in
+        </button>
+
+        <!-- Register buttons -->
+        <div class="text-center">
+          <a href="{% url 'registration' %}">
+            <p>or sign up with:</p>
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

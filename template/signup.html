@@ -1,0 +1,85 @@
+
+{% extends "layout.html" %}
+
+{% block title %}
+signup
+{% endblock %}
+{% block content %}
+<div class="col-lg-6 mb-5 mb-lg-0">
+  <div class="card shadow">
+    <div class="card-body py-5 px-md-5 mt-3">
+      <form method="post">
+        {% csrf_token %}
+        {% if messages %}
+        {% for message in messages %}
+        <p style="color: red">{{ message }}</p>
+        {% endfor %}
+        {% endif %}
+        <!-- 2 column grid layout with text inputs for the first and last names -->
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <div class="form-outline">
+              <label class="form-label" for="form3Example1">First name</label>
+              <input type="text" id="form3Example1" name="fname" class="form-control" placeholder="First Name"
+                required />
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <div class="form-outline">
+              <label class="form-label" for="form3Example2">Last name</label>
+              <input type="text" id="form3Example2" name="lname" class="form-control" placeholder="Last Name"
+                required />
+            </div>
+          </div>
+        </div>
+
+        <!-- Email input -->
+        <div class="form-outline mb-4">
+          <label class="form-label" for="form3Example3">Email address</label>
+          <input type="email" id="form3Example3" name="email" class="form-control" placeholder="Email address"
+            required />
+        </div>
+
+        <!-- User Name input -->
+        <div class="form-outline mb-4 ">
+          <label class="form-label" for="form3Example1">User Name</label>
+          <input type="text" id="form3Example3" name="username" class="form-control" placeholder="User Name" required />
+        </div>
+
+        <!-- Password1 input -->
+        <div class="form-outline mb-4">
+          <label class="form-label" for="form3Example4">Password</label>
+          <input type="password" id="form3Example4" name="password1" class="form-control" placeholder="Password"
+            required />
+        </div>
+
+        <!-- Password2 input -->
+        <div class="form-outline mb-4">
+          <label class="form-label" for="form3Example4">Confrim Password</label>
+          <input type="password" id="form3Example4" name="password2" class="form-control" placeholder="Confrim Password"
+            required />
+        </div>
+        <!-- Checkbox -->
+        <div class="form-check d-flex justify-content-center mb-4">
+          <input class="form-check-input me-2" type="checkbox" value="" id="form2Example33" checked />
+          <label class="form-check-label" for="form2Example33">
+            Subscribe to our newsletter
+          </label>
+        </div>
+
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary btn-block mb-4 shadow">
+          Sign up
+        </button>
+
+        <!-- Register buttons -->
+        <div class="text-center">
+          <a href="{% url 'user_login' %}">
+            <p>or sign in with:</p>
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
