@@ -15,14 +15,15 @@
   <title>{% block title %}
     {% endblock %}</title>
 
-    <style>
+    <!-- <style>
+      
       body{
         background-image: url("{% static 'img/bg.jpg' %}");
       }
-    </style>
+    </style> -->
 </head>
 
-<body>
+<body style="background-color: rgb(229, 212, 212);">
 
   <div class="container-fluid shadow fixed-top" style="background-color: rgb(250, 241, 241);height: 70px;">
     <div class="row">
@@ -44,11 +45,12 @@
                   <a class="nav-link active" href="{% url 'user_logout' %}">Logout</a>
                 </li>
               </ul>
-              <form class="d-flex" method="post" action="{% url 'search_item' %}">
-                {% csrf_token %}
-                <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-              </form>
+              {% if user.is_authenticated %}
+              <h5 style="text-transform: uppercase;" class="me-3 mt-3">{{user.username}} </h3>
+                {% endif %}</a>
+              {% block search %}
+              
+              {% endblock %}
             </div>
           </div>
         </nav>
@@ -80,7 +82,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 
+{% block script %}
 
+{% endblock %}
 </body>
 
 </html>

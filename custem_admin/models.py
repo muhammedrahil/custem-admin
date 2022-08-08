@@ -9,6 +9,7 @@ class Product(models.Model):
     count=models.IntegerField()
     description=models.CharField(max_length=250,default='')
     image=models.ImageField(upload_to='upload_image')
+    is_cart=models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

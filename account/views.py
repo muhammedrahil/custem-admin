@@ -40,7 +40,7 @@ def registration(request):
 @never_cache
 def user_login(request):
     if request.user.is_authenticated:
-        if request.user.is_superuser:
+        if request.user.is_superuser and request.user.is_staff:
             return redirect(admin_site)
         else :
             return redirect(home)
@@ -50,7 +50,7 @@ def user_login(request):
         user=authenticate(username=username,password=password)
         if user is not None:
             login(request,user)
-            if request.user.is_superuser:
+            if request.user.is_superuser and request.user.is_staff:
                 return redirect(admin_site)
             else :
                 return redirect(home)

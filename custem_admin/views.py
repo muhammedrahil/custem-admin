@@ -13,6 +13,12 @@ from django.db.models import Q
 @login_required(login_url='user_login')
 @never_cache
 def admin_site(request):
+    if request.method == 'POST':
+        search = request.POST['search']
+        search_dict={
+            'user_list':User.objects.filter(Q(username__icontains=search) | Q(email__icontains=search) | Q(first_name__icontains=search) | Q(last_name__icontains=search) )
+        }
+        return render(request,'superuserhome.html',search_dict)
     user_dict={
         'user_list':User.objects.all()
     }
@@ -105,20 +111,20 @@ def user_add(request):
         return redirect(admin_site)
     return render(request,'user_creation.html')
 
-@login_required(login_url='user_login')
-def search_user(request):
-    search = request.POST['search']
-    search_dict={
-        'search_data':User.objects.filter(Q(username__icontains=search) | Q(email__icontains=search) | Q(first_name__icontains=search) | Q(last_name__icontains=search) )
-    }
-    return render(request,'superuserhome.html',search_dict)
 
 @login_required(login_url='user_login')
 def product_deatails(request):
+    if request.method == 'POST':
+        search=request.POST['search']
+        dict_product={
+            'product': Product.objects.filter(name__icontains=search)
+        }       
+        return render(request,'productdeatil.html',dict_product)
     dict_product={
         'product': Product.objects.all()
     }
     return render(request,'productdeatil.html',dict_product)
+
 
 @login_required(login_url='user_login')
 def add_product(request):
@@ -142,6 +148,7 @@ def add_product(request):
         return redirect(add_product)
     return render(request,'addproduct.html')
 
+@login_required(login_url='user_login')
 def edit_product(request,id):
     if request.method == 'POST':
         name=request.POST['name']
@@ -152,8 +159,8 @@ def edit_product(request,id):
         if len(request.FILES) != 0:
             try:
                 image=request.FILES['image']
-                product.image=image
                 image_path=product.image.path
+                product.image=image
                 os.remove(image_path)
             except:
                 pass   

@@ -1,50 +1,62 @@
 {% extends "adminlayout.html" %}
+
 {% load static %}
+
 {% block title %}
 product deatils
 {% endblock %}
+
+
+{% block search %}
+<form class="d-flex" method="post">
+  {% csrf_token %}
+  <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">
+  <button class="btn btn-outline-success" type="submit">Search</button>
+</form>
+{% endblock %}
+
 {% block content %}
 <a href="{% url 'add_product' %}" class="btn btn-primary float-right mt-4 ms-5 "> Add Product<img
     src="{% static 'img/plus.png' %}" height="20px" width="20px" alt=""></a>
 
-    <div class="container-fluid mt-5">
-        <div class="row">
-          <div class="col-lg-12">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">product Name</th>
-                  <th scope="col">Price</th>
-                  <th scope="col">Count</th>
-                  <th scope="col">Image</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for i in product %}
-                <tr>
-                    <td>{{forloop.counter}}</td>
-                    <td >{{i.name}}</td>
-                    <td><strong>₹ </strong>{{i.price}}</td>
-                    <td>{{i.count}}</td>
-                    {% if i.image %}
-                    <td> <img src="{{i.image.url}}" alt="" height="70px" width="150px"> </td>
-                    {% else %}
-                    <td> <img  src="{% static 'img/noimage.jpg'%} "  height="70px" width="150px">
-                    </td>
-                    {% endif %}
-                    <td>
-                      <span><a href="{% url 'edit_product' id=i.id %}" class="mr-4" title="Edit"><i
-                            class="fa fa-edit color-muted"></i> </a>
-                        <a href="" title="Delete"><i class="fa fa-trash color-danger"
-                            style="font-size:18px;color:red"></i></a></span>
-                    </td>
-                  </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-12">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">product Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Product Image</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in product %}
+          <tr>
+            <th scope="col" >{{forloop.counter}}</th>
+            <td >{{i.name}}</td>
+            <td ><strong>₹ </strong>{{i.price}}</td>
+            <td >{{i.count}}</td>
+            {% if i.image %}
+            <td class="col-md-2"> <img src="{{i.image.url}}" alt="" height="70px" width="150px" class="shadow"> </td>
+            {% else %}
+            <td class="col-md-2"> <img src="{% static 'img/noimage.jpg'%} " height="70px" width="150px"></td>
+             {% endif %}
+            <td class="col-md-2">
+              <a href="{% url 'edit_product' id=i.id %}" class="mr-4" title="Edit"><i
+                  class="fa fa-edit color-muted"></i> </a>
+              <a href="" title="Delete"><i class="fa fa-trash color-danger" style="font-size:18px;color:red"></i></a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

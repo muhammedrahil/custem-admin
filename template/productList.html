@@ -3,28 +3,57 @@
 {% block title %}
 product deatils
 {% endblock %}
-{% block content %}
 
+
+{% block style %}
+<style>
+    .not-display{
+        display: none;
+    }
+</style>
+{% endblock %}
+
+
+
+{% block search %}
+
+
+<form class="d-flex" method="post" >
+    {% csrf_token %}
+    <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+  </form>
+
+  {% if messages %}
+  <ul class="messages" id="msg" >
+      {% for message in messages %}
+      <p style="font-size: 10px;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+      {% endfor %}
+  </ul>
+  {% endif %}
+      
+  <a href="{% url 'cart' %}" class="btn btn-success m-2 rounded-pill">Cart</a>
+{% endblock %}
+{% block content %}
 
 
 <div class="container">
     <div class="row">
-
         {% if search_product %}
         {% for i in search_product %}
         <div class="col-lg-4 mt-4">
-            <div class="card" style="width: 18rem;">
+            <div class="card shadow rounded" style="width: 18rem;">
                 {% if i.image %}
-                <img class="card-img-top" src="{{i.image.url}}" alt="Card image cap" height="150px" width="300px">
+                <img class="card-img-top shadow" src="{{i.image.url}}" alt="Card image cap" height="150px" width="300px" >
                 {% else %}
-                <img class="card-img-top" src="{% static 'img/noimage.jpg'%} " alt=" Card image cap" height="150px" width="300px">
+                <img class="card-img-top shadow" src="{% static 'img/noimage.jpg'%} " alt=" Card image cap" height="150px" width="300px">
                 {% endif %}
                 <div class="card-body shadow">
                     <h5 class="card-title">{{i.name}}</h5>
                     <h5 class="card-text"><strong>₹ </strong>{{i.price}}</h5>
                     <h5 class="card-text">Available Stock {{i.count}}</h5>
                     <p class="card-text">{{i.description}}</p>
-                    <a href="#" class="btn btn-primary">ADD TO CART</a>
+                    <a href="{% url 'cart_section' id=i.id %}" id="btn" onclick="click()" class="btn btn-primary">ADD TO CART</a>
                 </div>
             </div>
         </div>
@@ -32,30 +61,42 @@ product deatils
         {% else %}
         {% for i in product %}
         <div class="col-lg-4 mt-4">
-            <div class="card" style="width: 18rem;">
+            <div class="card shadow rounded" style="width: 18rem;">
                 {% if i.image %}
-                <img class="card-img-top" src="{{i.image.url}}" alt="Card image cap" height="150px" width="300px">
+                <img class="card-img-top shadow rounded" src="{{i.image.url}}" alt="Card image cap" height="150px" width="300px">
                 {% else %}
-                <img class="card-img-top" src="{% static 'img/noimage.jpg'%} " alt=" Card image cap" height="150px" width="300px">
+                <img class="card-img-top shadow rounded" src="{% static 'img/noimage.jpg'%} " alt=" Card image cap" height="150px" width="300px">
                 {% endif %}
                 <div class="card-body shadow">
                     <h5 class="card-title">{{i.name}}</h5>
                     <h5 class="card-text"><strong>₹ </strong>{{i.price}}</h5>
                     <h5 class="card-text">Available Stock {{i.count}}</h5>
                     <p class="card-text">{{i.description}}</p>
-                    <a href="#" class="btn btn-primary">ADD TO CART</a>
+                    <a href="{% url 'cart_section' id=i.id %}" id="btn"  class="btn btn-primary">ADD TO CART</a>
                 </div>
             </div>
         </div>
         {% endfor %}
         {% endif %}
-
-
-
-
-
-
     </div>
 </div>
 
+
+
+{% block script %}
+<script>
+    
+    document.getElementById('msg').onclick=function(){
+        click()
+    };
+
+    function click(){
+console.log('hello')
+    setTimeout(showstatus, 4000);
+function showstatus() {
+  document.getElementById('msg').style.display = "none";
+}
+    }
+</script>
+{% endblock %}
 {% endblock %}
